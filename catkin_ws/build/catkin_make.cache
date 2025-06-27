@@ -1,0 +1,2 @@
+my_robot
+-DCATKIN_DEVEL_PREFIX=/home/fadi/repo/RSEND_go_chase_it/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/fadi/repo/RSEND_go_chase_it/catkin_ws/install -G Unix Makefiles
