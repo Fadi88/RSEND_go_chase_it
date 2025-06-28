@@ -15,6 +15,15 @@
   <material name="black">
     <color rgba="0 0 0 1"/>
   </material>
+  <material name="yellow">
+    <color rgba="1 1 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="top_cylinder_blue_material">
+    <color rgba="0 0 1 1"/>
+  </material>
   <xacro:include filename="$(find my_robot)/urdf/my_robot.gazebo" />
   <link name="robot_footprint"></link>
   <joint name="robot_footprint_joint" type="fixed">
@@ -23,7 +32,7 @@
     <child link="chassis" />
   </joint>
   <link name='chassis'>
-    <pose>0 0 0.1 0 0 0</pose>
+    <pose>0 0 0.06 0 0 0</pose>
     <inertial>
       <mass value="15.0"/>
       <origin xyz="0.0 0 0" rpy="0 0 0"/>
@@ -36,39 +45,46 @@
     <collision name='collision'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size=".4 .2 .1"/>
+        <box size=".45 .33 .06"/>
       </geometry>
     </collision>
-    <visual name='chassis_visual'>
+    <visual name='chassis_visual_base'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size=".4 .2 .1"/>
+        <box size=".45 .33 .06"/>
       </geometry>
-      <material name="blue"/>
+      <material name="yellow"/>
+    </visual>
+    <visual name='chassis_visual_top'>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.08" length="0.05"/>
+      </geometry>
+      <material name="top_cylinder_blue_material"/>
     </visual>
     <collision name='back_caster_collision'>
-      <origin xyz="-0.15 0 -0.05" rpy="0 0 0"/>
+      <origin xyz="-0.15 0 -0.06" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.0499"/>
+        <sphere radius="0.035"/>
       </geometry>
     </collision>
     <visual name='back_caster_visual'>
-      <origin xyz="-0.15 0 -0.05" rpy="0 0 0"/>
+      <origin xyz="-0.15 0 -0.06" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.05"/>
+        <sphere radius="0.035"/>
       </geometry>
       <material name="grey"/>
     </visual>
     <collision name='front_caster_collision'>
-      <origin xyz="0.15 0 -0.05" rpy="0 0 0"/>
+      <origin xyz="0.15 0 -0.06" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.0499"/>
+        <sphere radius="0.035"/>
       </geometry>
     </collision>
     <visual name='front_caster_visual'>
-      <origin xyz="0.15 0 -0.05" rpy="0 0 0"/>
+      <origin xyz="0.15 0 -0.06" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.05"/>
+        <sphere radius="0.035"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -86,13 +102,13 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.10" length="0.025"/>
       </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.10" length="0.025"/>
       </geometry>
       <material name="green"/>
     </visual>
@@ -110,19 +126,19 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.10" length="0.025"/>
       </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.10" length="0.025"/>
       </geometry>
       <material name="green"/>
     </visual>
   </link>
   <joint type="continuous" name="left_wheel_joint">
-    <origin xyz="0 0.15 0" rpy="0 0 0"/>
+    <origin xyz="0 0.165 0" rpy="0 0 0"/>
     <child link="left_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -130,7 +146,7 @@
     <dynamics damping="1.0" friction="1.0"/>
   </joint>
   <joint type="continuous" name="right_wheel_joint">
-    <origin xyz="0 -0.15 0" rpy="0 0 0"/>
+    <origin xyz="0 -0.165 0" rpy="0 0 0"/>
     <child link="right_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -192,14 +208,15 @@
     </visual>
   </link>
   <joint name="hokuyo_joint" type="fixed">
-    <origin xyz="0.15 0 0.1" rpy="0 0 0"/>
+    <origin xyz="0.15 0 0.08" rpy="0 0 0"/>
     <parent link="chassis"/>
     <child link="hokuyo"/>
     <axis xyz="0 1 0"/>
   </joint>
-  <!-- GAZEBO REFERENCES FOR MATERIALS -->
-  <!-- These tags tell Gazebo how to apply the defined URDF materials -->
   <gazebo reference="chassis">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="chassis_visual_top">
     <material>Gazebo/Blue</material>
   </gazebo>
   <gazebo reference="left_wheel">
