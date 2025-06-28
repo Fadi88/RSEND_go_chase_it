@@ -55,40 +55,62 @@
       </geometry>
       <material name="yellow"/>
     </visual>
-    <visual name='chassis_visual_top'>
-      <origin xyz="0 0 0.03" rpy="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.08" length="0.05"/>
-      </geometry>
-      <material name="top_cylinder_blue_material"/>
-    </visual>
     <collision name='back_caster_collision'>
-      <origin xyz="-0.15 0 -0.06" rpy="0 0 0"/>
+      <origin xyz="-0.15 0 -0.025" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.035"/>
       </geometry>
     </collision>
     <visual name='back_caster_visual'>
-      <origin xyz="-0.15 0 -0.06" rpy="0 0 0"/>
+      <origin xyz="-0.15 0 -0.025" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.035"/>
       </geometry>
       <material name="grey"/>
     </visual>
     <collision name='front_caster_collision'>
-      <origin xyz="0.15 0 -0.06" rpy="0 0 0"/>
+      <origin xyz="0.15 0 -0.025" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.035"/>
       </geometry>
     </collision>
     <visual name='front_caster_visual'>
-      <origin xyz="0.15 0 -0.06" rpy="0 0 0"/>
+      <origin xyz="0.15 0 -0.025" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.035"/>
       </geometry>
       <material name="grey"/>
     </visual>
   </link>
+  <link name='top_cylinder_link'>
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia
+        ixx="1e-6" ixy="0" ixz="0"
+        iyy="1e-6" iyz="0"
+        izz="1e-6"
+      />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.08" length="0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.08" length="0.05"/>
+      </geometry>
+      <material name="top_cylinder_blue_material"/>
+    </visual>
+  </link>
+  <joint name="top_cylinder_joint" type="fixed">
+    <origin xyz="0 0 0.055" rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="top_cylinder_link"/>
+  </joint>
   <link name='left_wheel'>
     <inertial>
       <mass value="5"/>
@@ -102,13 +124,13 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.10" length="0.025"/>
+        <cylinder radius="0.08" length="0.025"/>
       </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.10" length="0.025"/>
+        <cylinder radius="0.08" length="0.025"/>
       </geometry>
       <material name="green"/>
     </visual>
@@ -126,19 +148,19 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.10" length="0.025"/>
+        <cylinder radius="0.08" length="0.025"/>
       </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.10" length="0.025"/>
+        <cylinder radius="0.08" length="0.025"/>
       </geometry>
       <material name="green"/>
     </visual>
   </link>
   <joint type="continuous" name="left_wheel_joint">
-    <origin xyz="0 0.165 0" rpy="0 0 0"/>
+    <origin xyz="0 0.165 0.02" rpy="0 0 0"/>
     <child link="left_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -146,7 +168,7 @@
     <dynamics damping="1.0" friction="1.0"/>
   </joint>
   <joint type="continuous" name="right_wheel_joint">
-    <origin xyz="0 -0.165 0" rpy="0 0 0"/>
+    <origin xyz="0 -0.165 0.02" rpy="0 0 0"/>
     <child link="right_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -166,19 +188,19 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.06 0.06 0.06"/>
       </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.06 0.06 0.06"/>
       </geometry>
       <material name="red"/>
     </visual>
   </link>
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    <origin xyz="0.225 0 0.03" rpy="0 0 0"/>
     <parent link="chassis"/>
     <child link="camera"/>
     <axis xyz="0 1 0"/>
@@ -208,7 +230,7 @@
     </visual>
   </link>
   <joint name="hokuyo_joint" type="fixed">
-    <origin xyz="0.15 0 0.08" rpy="0 0 0"/>
+    <origin xyz="0.15 0 0.085" rpy="0 0 0"/>
     <parent link="chassis"/>
     <child link="hokuyo"/>
     <axis xyz="0 1 0"/>
@@ -216,7 +238,7 @@
   <gazebo reference="chassis">
     <material>Gazebo/Yellow</material>
   </gazebo>
-  <gazebo reference="chassis_visual_top">
+  <gazebo reference="top_cylinder_link">
     <material>Gazebo/Blue</material>
   </gazebo>
   <gazebo reference="left_wheel">
